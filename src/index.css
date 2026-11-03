@@ -1,0 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Gulzar&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default: Sovereign High-Contrast Theme (Tailored to NTC Logo) */
+  --color-primary: #047857;
+  --color-primary-hover: #065f46;
+  --color-navbar-bg: #ffffff;
+  --color-navbar-text: #0f172a;
+  --color-icon: #059669;
+  --color-card-bg: #ffffff;
+  --color-card-border: #e2e8f0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+html.dark {
+  --color-primary: #10b981;
+  --color-primary-hover: #34d399;
+  --color-navbar-bg: #090e1a;
+  --color-navbar-text: #f8fafc;
+  --color-icon: #10b981;
+  --color-card-bg: #0f172a;
+  --color-card-border: #1e293b;
+}
+
+/* Root and viewport protection to guarantee no horizontal overflow on mobile or desktop */
+html,
+body,
+#root {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* ==========================================================
+   URDU TYPOGRAPHY & RTL STYLES (2026 Enhanced Engine)
+   ========================================================== */
+
+html[dir="rtl"],
+html.font-urdu,
+html.font-urdu body {
+  font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Tahoma, system-ui, sans-serif;
+  letter-spacing: normal;
+  word-spacing: 0.05em;
+  line-height: 2 !important;
+}
+
+/* Headings in RTL/Urdu mode: Nastaliq requires 1.85+ line height to prevent ascender/descender collision */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html.font-urdu h1,
+html.font-urdu h2,
+html.font-urdu h3,
+html.font-urdu h4,
+html.font-urdu h5,
+html.font-urdu h6 {
+  font-family: 'Noto Nastaliq Urdu', 'Gulzar', Tahoma, sans-serif;
+  line-height: 1.85 !important;
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+}
+
+/* Force override Tailwind tight leading classes in RTL/Urdu mode */
+html[dir="rtl"] .leading-none,
+html[dir="rtl"] .leading-tight,
+html[dir="rtl"] .leading-snug,
+html[dir="rtl"] [class*="leading-[1."],
+html.font-urdu .leading-none,
+html.font-urdu .leading-tight,
+html.font-urdu .leading-snug,
+html.font-urdu [class*="leading-[1."] {
+  line-height: 1.85 !important;
+}
+
+html[dir="rtl"] .leading-normal,
+html.font-urdu .leading-normal {
+  line-height: 2 !important;
+}
+
+html[dir="rtl"] .leading-relaxed,
+html[dir="rtl"] .leading-loose,
+html.font-urdu .leading-relaxed,
+html.font-urdu .leading-loose {
+  line-height: 2.2 !important;
+}
+
+/* RTL layout adjustments */
+html[dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* Ensure inline gradient text doesn't clip Urdu nuqtas/dots */
+html[dir="rtl"] .bg-clip-text,
+html.font-urdu .bg-clip-text {
+  display: inline-block;
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+  line-height: 1.85 !important;
+}
+
+/* Prevent truncate clipping on Urdu characters */
+html[dir="rtl"] .truncate,
+html.font-urdu .truncate {
+  padding-top: 2px;
+  padding-bottom: 3px;
+}
+
+/* Generous vertical spacing for lists in RTL */
+html[dir="rtl"] footer ul.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.75rem !important;
+}
+
+/* ==========================================================
+   USERWAY-STYLE ACCESSIBILITY ENGINE STYLES (2026 Responsive)
+   ========================================================== */
+
+/* 1. Responsive Text Sizing Multipliers: Calibrated for mobile so layouts never break */
+html.a11y-text-large {
+  font-size: 110% !important;
+}
+html.a11y-text-xlarge {
+  font-size: 118% !important;
+}
+html.a11y-text-huge {
+  font-size: 126% !important;
+}
+
+@media (min-width: 640px) {
+  html.a11y-text-large {
+    font-size: 115% !important;
+  }
+  html.a11y-text-xlarge {
+    font-size: 128% !important;
+  }
+  html.a11y-text-huge {
+    font-size: 140% !important;
+  }
+}
+
+/* Ensure containers don't horizontally overflow on text enlargement */
+html[class*="a11y-text-"] body {
+  overflow-x: hidden !important;
+}
+html[class*="a11y-text-"] * {
+  overflow-wrap: break-word;
+}
+
+/* 2. Contrast Modes */
+html.a11y-contrast-high {
+  filter: contrast(160%) brightness(105%) !important;
+}
+
+html.a11y-contrast-high body {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+}
+
+html.a11y-contrast-high .bg-white,
+html.a11y-contrast-high .bg-slate-50,
+html.a11y-contrast-high .bg-slate-100,
+html.a11y-contrast-high .bg-slate-800,
+html.a11y-contrast-high .bg-slate-900,
+html.a11y-contrast-high header,
+html.a11y-contrast-high nav,
+html.a11y-contrast-high footer,
+html.a11y-contrast-high .card {
+  background-color: #0d0d0d !important;
+  color: #ffffff !important;
+  border-color: #ffff00 !important;
+}
+
+html.a11y-contrast-high h1,
+html.a11y-contrast-high h2,
+html.a11y-contrast-high h3,
+html.a11y-contrast-high h4,
+html.a11y-contrast-high h5,
+html.a11y-contrast-high h6,
+html.a11y-contrast-high strong {
+  color: #ffff00 !important;
+}
+
+html.a11y-contrast-grayscale {
+  filter: grayscale(100%) !important;
+}
+
+html.a11y-contrast-invert {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+html.a11y-contrast-invert img,
+html.a11y-contrast-invert iframe,
+html.a11y-contrast-invert video,
+html.a11y-contrast-invert svg {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* 3. Highlight Links (Scoped to prevent card distortions) */
+html.a11y-highlight-links main a:not([class*="group"]):not([class*="block rounded"]):not([class*="btn"]),
+html.a11y-highlight-links footer a,
+html.a11y-highlight-links button[role="link"] {
+  background-color: #fef08a !important;
+  color: #000000 !important;
+  text-decoration: underline 3px #ca8a04 !important;
+  padding: 1px 4px !important;
+  border-radius: 4px !important;
+  font-weight: 800 !important;
+}
+
+/* 4. Readable Font (Dyslexia Friendly) */
+html.a11y-readable-font,
+html.a11y-readable-font * {
+  font-family: Arial, Helvetica, Verdana, sans-serif !important;
+  line-height: 1.8 !important;
+  word-spacing: 0.08em !important;
+}
+
+/* Urdu Readable Font Override: Keeps Urdu beautifully legible without broken Arial ligatures */
+html[dir="rtl"].a11y-readable-font,
+html[dir="rtl"].a11y-readable-font * {
+  font-family: Tahoma, 'Noto Sans Arabic', system-ui, sans-serif !important;
+  line-height: 2 !important;
+  letter-spacing: normal !important;
+}
+
+/* 5. Text Spacing */
+html.a11y-text-spacing * {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.22em !important;
+  line-height: 2 !important;
+}
+
+/* Urdu Text Spacing: Prevents cursive Arabic letter detachment while expanding word spacing */
+html[dir="rtl"].a11y-text-spacing,
+html[dir="rtl"].a11y-text-spacing * {
+  letter-spacing: normal !important;
+  word-spacing: 0.24em !important;
+  line-height: 2.15 !important;
+}
+
+/* 6. Big Cursor */
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="%23000000" stroke="%23ffffff" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>'), auto !important;
+}
+
+/* 7. Pause Animations */
+html.a11y-pause-animations,
+html.a11y-pause-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* 8. Line Height Settings: Targets content text without breaking badges or buttons */
+html.a11y-line-relaxed p,
+html.a11y-line-relaxed li,
+html.a11y-line-relaxed td,
+html.a11y-line-relaxed th,
+html.a11y-line-relaxed blockquote,
+html.a11y-line-relaxed article {
+  line-height: 2 !important;
+}
+
+html.a11y-line-relaxed h1,
+html.a11y-line-relaxed h2,
+html.a11y-line-relaxed h3 {
+  line-height: 1.45 !important;
+}
+
+html.a11y-line-loose p,
+html.a11y-line-loose li,
+html.a11y-line-loose td,
+html.a11y-line-loose th,
+html.a11y-line-loose blockquote,
+html.a11y-line-loose article {
+  line-height: 2.35 !important;
+}
+
+html.a11y-line-loose h1,
+html.a11y-line-loose h2,
+html.a11y-line-loose h3 {
+  line-height: 1.6 !important;
+}
+
+/* 9. Text Alignment Overrides */
+html.a11y-align-left main p,
+html.a11y-align-left main article,
+html.a11y-align-left main li,
+html.a11y-align-left main h1,
+html.a11y-align-left main h2,
+html.a11y-align-left main h3 {
+  text-align: left !important;
+}
+
+html.a11y-align-center main p,
+html.a11y-align-center main article,
+html.a11y-align-center main li,
+html.a11y-align-center main h1,
+html.a11y-align-center main h2,
+html.a11y-align-center main h3 {
+  text-align: center !important;
+}
+
+html.a11y-align-right main p,
+html.a11y-align-right main article,
+html.a11y-align-right main li,
+html.a11y-align-right main h1,
+html.a11y-align-right main h2,
+html.a11y-align-right main h3 {
+  text-align: right !important;
+}
+
+html.a11y-align-justify main p,
+html.a11y-align-justify main article,
+html.a11y-align-justify main li {
+  text-align: justify !important;
+  text-justify: inter-word;
+}
+
+/* 10. Hide Images (Cognitive Distraction Free) */
+html.a11y-hide-images img,
+html.a11y-hide-images [style*="background-image"] {
+  opacity: 0.04 !important;
+  filter: blur(8px) !important;
+}
+
+/* 11. Saturation Multipliers */
+html.a11y-sat-low {
+  filter: saturate(40%) !important;
+}
+
+html.a11y-sat-high {
+  filter: saturate(200%) !important;
+}
+
+/* 12. Reading Ruler (Laser Line) */
+.a11y-reading-ruler {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #3b82f6;
+  box-shadow: 0 0 14px 4px rgba(59, 130, 246, 0.7);
+  pointer-events: none;
+  z-index: 99999;
+  transition: top 0.05s ease-out;
+}
+
+/* Glassmorphism helpers */
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}

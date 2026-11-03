@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+dist
+dist-ssr
+
+# Local env files
+*.local
+.env
+.env.*
+!.env.example
+
+# Tooling and caches
+.sdl-mcp
+.playwright-mcp
+*.log
+
+# Editor & OS files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea
