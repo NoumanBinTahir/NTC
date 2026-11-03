@@ -150,10 +150,12 @@ export const TenderUploadModal: React.FC<TenderUploadModalProps> = ({
           />
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            <label htmlFor="tender-category-select" className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               Category / Sector *
             </label>
             <select
+              id="tender-category-select"
+              aria-label="Category / Sector"
               value={category}
               onChange={(e) => setCategory(e.target.value as TenderCategory)}
               className="block w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
@@ -185,10 +187,12 @@ export const TenderUploadModal: React.FC<TenderUploadModalProps> = ({
           />
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            <label htmlFor="tender-status-select" className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               Initial Status
             </label>
             <select
+              id="tender-status-select"
+              aria-label="Initial Status"
               value={status}
               onChange={(e) => setStatus(e.target.value as TenderStatus)}
               className="block w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm py-2.5 px-3 focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
@@ -211,11 +215,12 @@ export const TenderUploadModal: React.FC<TenderUploadModalProps> = ({
 
         {/* Drag and drop file upload area */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+          <label htmlFor="tender-pdf-input" className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             Tender PDF Document *
           </label>
 
           <input
+            id="tender-pdf-input"
             ref={fileInputRef}
             type="file"
             accept=".pdf,application/pdf"
@@ -228,12 +233,23 @@ export const TenderUploadModal: React.FC<TenderUploadModalProps> = ({
           />
 
           <div
+            role={!selectedFile ? 'button' : undefined}
+            tabIndex={!selectedFile ? 0 : undefined}
+            aria-label={!selectedFile ? 'Upload tender PDF document dropzone' : undefined}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
+            onClick={() => !selectedFile && fileInputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (!selectedFile && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                fileInputRef.current?.click();
+              }
+            }}
+            className={`border-2 border-dashed rounded-2xl p-6 text-center transition-colors duration-150 ${
+              !selectedFile ? 'cursor-pointer' : ''
+            } ${
               dragActive
                 ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/10'
                 : selectedFile
@@ -254,6 +270,7 @@ export const TenderUploadModal: React.FC<TenderUploadModalProps> = ({
                 </div>
                 <button
                   type="button"
+                  aria-label="Remove selected PDF file"
                   onClick={(e) => {
                     e.stopPropagation();
                     setSelectedFile(null);

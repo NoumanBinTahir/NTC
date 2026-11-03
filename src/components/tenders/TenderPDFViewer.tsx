@@ -4,7 +4,7 @@ import { Tender } from '../../types/tender';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { Badge } from '../common/Badge';
-import { getTenderPdfUrl } from '../../services/tenderStorage';
+import { getTenderPdfUrl, revokeTenderPdfUrl } from '../../services/tenderStorage';
 
 interface TenderPDFViewerProps {
   tender: Tender | null;
@@ -22,13 +22,17 @@ export const TenderPDFViewer: React.FC<TenderPDFViewerProps> = ({
 
   useEffect(() => {
     let active = true;
+    let loadedUrl = '';
     if (tender && isOpen) {
       setLoading(true);
       getTenderPdfUrl(tender)
         .then((url) => {
           if (active) {
+            loadedUrl = url;
             setPdfUrl(url);
             setLoading(false);
+          } else {
+            revokeTenderPdfUrl(url);
           }
         })
         .catch((err) => {
@@ -38,6 +42,9 @@ export const TenderPDFViewer: React.FC<TenderPDFViewerProps> = ({
     }
     return () => {
       active = false;
+      if (loadedUrl) {
+        revokeTenderPdfUrl(loadedUrl);
+      }
     };
   }, [tender, isOpen]);
 
@@ -49,7 +56,7 @@ export const TenderPDFViewer: React.FC<TenderPDFViewerProps> = ({
       iframe.contentWindow.focus();
       iframe.contentWindow.print();
     } else {
-      window.open(pdfUrl, '_blank');
+      window.open(pdfUrl, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -168,6 +175,7 @@ export const TenderPDFViewer: React.FC<TenderPDFViewerProps> = ({
                 src={`${pdfUrl}#toolbar=1&navpanes=0`}
                 className="w-full h-full border-0"
                 title={`Tender PDF: ${tender.title}`}
+                sandbox="allow-scripts allow-popups allow-downloads"
               />
 
               {/* Fallback download banner if iframe is restricted */}

@@ -206,9 +206,9 @@ export const OfficeMapViewer: React.FC = () => {
               href={selectedOffice.googleMapsLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md group"
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold transition-colors duration-150 shadow-md group"
             >
-              <Navigation className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <Navigation className="w-4 h-4 group-hover:scale-110 transition-transform duration-150" />
               <span>Open in Official Google Maps & Directions</span>
             </a>
           </div>
@@ -224,6 +224,7 @@ export const OfficeMapViewer: React.FC = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title={`NTC Google Map Location - ${selectedOffice.city}`}
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
           />
         </div>
       </div>

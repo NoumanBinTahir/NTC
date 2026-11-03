@@ -34,7 +34,7 @@ export const AdminPortalPage: React.FC = () => {
   const [tenders, setTenders] = useState<Tender[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [homeConfig, setHomeConfig] = useState<HomePageConfig>(getHomeConfig());
+  const [homeConfig, setHomeConfig] = useState<HomePageConfig>(() => getHomeConfig());
 
   // Modals state
   const [uploadTenderOpen, setUploadTenderOpen] = useState(false);
@@ -231,10 +231,12 @@ export const AdminPortalPage: React.FC = () => {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="admin-passcode-input" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Administrative Passcode *
               </label>
               <input
+                id="admin-passcode-input"
+                aria-label="Administrative Passcode"
                 type="password"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
@@ -380,6 +382,7 @@ export const AdminPortalPage: React.FC = () => {
                     </td>
                     <td className="p-4 whitespace-nowrap">
                       <select
+                        aria-label={`Update tender status for ${t.refNo}`}
                         value={t.status}
                         onChange={(e) => handleStatusChange(t.id, e.target.value as any)}
                         className="text-xs px-2 py-1 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-semibold"
@@ -623,10 +626,12 @@ export const AdminPortalPage: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="ticker-message-content" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Ticker Message Content *
               </label>
               <textarea
+                id="ticker-message-content"
+                aria-label="Ticker Message Content"
                 rows={2}
                 value={homeConfig.announcementTicker.text}
                 onChange={(e) =>
@@ -698,10 +703,12 @@ export const AdminPortalPage: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="spotlight-subtext" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Subtext Description *
               </label>
               <textarea
+                id="spotlight-subtext"
+                aria-label="Subtext Description"
                 rows={2}
                 value={homeConfig.heroSpotlight.subtext}
                 onChange={(e) =>
@@ -788,10 +795,12 @@ export const AdminPortalPage: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="news-category-select" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Category *
               </label>
               <select
+                id="news-category-select"
+                aria-label="News Category"
                 value={newsForm.category}
                 onChange={(e) => setNewsForm({ ...newsForm, category: e.target.value as any })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs"
@@ -805,10 +814,12 @@ export const AdminPortalPage: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="news-priority-select" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Priority *
               </label>
               <select
+                id="news-priority-select"
+                aria-label="News Priority"
                 value={newsForm.priority}
                 onChange={(e) => setNewsForm({ ...newsForm, priority: e.target.value as any })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs"
@@ -821,10 +832,12 @@ export const AdminPortalPage: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            <label htmlFor="news-summary-text" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               News Summary *
             </label>
             <textarea
+              id="news-summary-text"
+              aria-label="News Summary"
               rows={3}
               required
               placeholder="Provide a concise briefing for visitors..."
@@ -870,10 +883,12 @@ export const AdminPortalPage: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <label htmlFor="article-category-select" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                 Category *
               </label>
               <select
+                id="article-category-select"
+                aria-label="Article Category"
                 value={articleForm.category}
                 onChange={(e) => setArticleForm({ ...articleForm, category: e.target.value as any })}
                 className="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs"
@@ -886,6 +901,7 @@ export const AdminPortalPage: React.FC = () => {
             </div>
 
             <Input
+              id="article-author-input"
               label="Author / Directorate *"
               value={articleForm.author}
               onChange={(e) => setArticleForm({ ...articleForm, author: e.target.value })}
@@ -894,6 +910,7 @@ export const AdminPortalPage: React.FC = () => {
           </div>
 
           <Input
+            id="article-cover-input"
             label="Cover Image URL *"
             value={articleForm.coverImage}
             onChange={(e) => setArticleForm({ ...articleForm, coverImage: e.target.value })}
@@ -902,10 +919,12 @@ export const AdminPortalPage: React.FC = () => {
           />
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            <label htmlFor="article-summary-textarea" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               Brief Executive Summary *
             </label>
             <textarea
+              id="article-summary-textarea"
+              aria-label="Brief Executive Summary"
               rows={2}
               required
               placeholder="One or two sentences highlighting the core thesis..."
@@ -916,10 +935,12 @@ export const AdminPortalPage: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            <label htmlFor="article-body-textarea" className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               Full Article Body Content (Markdown supported) *
             </label>
             <textarea
+              id="article-body-textarea"
+              aria-label="Full Article Body Content"
               rows={6}
               required
               placeholder="Use ### for subheadings and empty lines for paragraphs..."

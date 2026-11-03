@@ -80,15 +80,16 @@ export const ArticleReaderModal: React.FC<ArticleReaderModalProps> = ({
 
         {/* Body Content */}
         <div className="space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-          {article.content.split('\n\n').map((paragraph, idx) => {
+          {article.content.split('\n\n').map((paragraph) => {
+            const pKey = `${article.id}-p-${paragraph.slice(0, 28).replace(/[^\w-]/g, '')}`;
             if (paragraph.startsWith('### ')) {
               return (
-                <h3 key={idx} className="text-lg font-bold text-slate-900 dark:text-white pt-3">
+                <h3 key={pKey} className="text-lg font-bold text-slate-900 dark:text-white pt-3">
                   {paragraph.replace('### ', '')}
                 </h3>
               );
             }
-            return <p key={idx}>{paragraph}</p>;
+            return <p key={pKey}>{paragraph}</p>;
           })}
         </div>
 

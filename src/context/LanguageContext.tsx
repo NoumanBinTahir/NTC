@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { en } from '../locales/en';
 import { ur } from '../locales/ur';
 
@@ -24,17 +24,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const isRTL = language === 'ur';
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
-  };
+  }, []);
 
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'ur' : 'en');
-  };
+  const toggleLanguage = useCallback(() => {
+    setLanguageState((prev) => (prev === 'en' ? 'ur' : 'en'));
+  }, []);
 
-  // Keep DOM updated with direction, lang, and Urdu font class
+  // Keep DOM updated with direction, lang, persistence, and Urdu font class
   useEffect(() => {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
     const dir = isRTL ? 'rtl' : 'ltr';
     document.documentElement.setAttribute('dir', dir);
     document.documentElement.setAttribute('lang', language);
@@ -49,7 +49,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language, isRTL]);
 
   // Nested property resolver (e.g. 'nav.home', 'carousel.slide1Title')
-  const t = (path: string): string => {
+  const t = useCallback((path: string): string => {
     const currentDict = language === 'ur' ? ur : en;
     const fallbackDict = en;
 
@@ -70,10 +70,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (fallback !== undefined) return fallback;
 
     return path;
-  };
+  }, [language]);
+
+  const contextValue = useMemo<LanguageContextType>(
+    () => ({ language, isRTL, setLanguage, toggleLanguage, t }),
+    [language, isRTL, setLanguage, toggleLanguage, t]
+  );
 
   return (
-    <LanguageContext.Provider value={{ language, isRTL, setLanguage, toggleLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

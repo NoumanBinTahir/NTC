@@ -43,6 +43,8 @@ export const ColorPickerItem: React.FC<ColorPickerItemProps> = ({
         </div>
         <div className="flex items-center gap-2">
           <input
+            id={`color-picker-${label.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+            aria-label={`Select ${label} custom color`}
             type="color"
             value={value.startsWith('#') ? value : '#047857'}
             onChange={(e) => onChange(e.target.value)}
@@ -60,6 +62,7 @@ export const ColorPickerItem: React.FC<ColorPickerItemProps> = ({
           <button
             key={swatch}
             type="button"
+            aria-label={`Select ${swatch} preset for ${label}`}
             onClick={() => onChange(swatch)}
             className={`w-5 h-5 rounded-md border transition-transform ${
               value.toLowerCase() === swatch.toLowerCase()

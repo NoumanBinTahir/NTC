@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
 interface ModalProps {
@@ -18,21 +18,22 @@ export const Modal: React.FC<ModalProps> = ({
   maxWidth = '2xl',
   showCloseButton = true,
 }) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      if (!dialog.open) {
+        dialog.showModal();
+      }
+    } else {
+      if (dialog.open) {
+        dialog.close();
+      }
     }
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = 'unset';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -48,17 +49,18 @@ export const Modal: React.FC<ModalProps> = ({
   }[maxWidth];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in">
-      {/* Backdrop */}
+    <dialog
+      ref={dialogRef}
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      aria-label={typeof title === 'string' ? title : 'Modal Dialog'}
+      className="fixed inset-0 z-50 m-auto p-4 sm:p-6 bg-transparent border-0 max-h-screen overflow-y-auto backdrop:bg-slate-900/60 backdrop:backdrop-blur-sm animate-fade-in focus:outline-none"
+    >
+      {/* Content Box */}
       <div
-        className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
-        onClick={onClose}
-      />
-
-      {/* Content Dialog */}
-      <div
-        className={`relative w-full ${maxWidthClasses} bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden transform transition-all animate-slide-up flex flex-col max-h-[92vh]`}
-        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full ${maxWidthClasses} mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transform transition-[transform,opacity] duration-200 animate-slide-up flex flex-col max-h-[92vh]`}
       >
         {/* Header */}
         {(title || showCloseButton) && (
@@ -81,6 +83,6 @@ export const Modal: React.FC<ModalProps> = ({
         {/* Body */}
         <div className="p-6 overflow-y-auto flex-1">{children}</div>
       </div>
-    </div>
+    </dialog>
   );
 };

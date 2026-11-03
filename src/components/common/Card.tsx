@@ -13,10 +13,24 @@ export const Card: React.FC<CardProps> = ({
   hoverable = false,
   onClick,
 }) => {
+  const isInteractive = Boolean(onClick);
+
   return (
     <div
       onClick={onClick}
-      className={`rounded-2xl border border-slate-200 dark:border-slate-800 bg-[var(--color-card-bg)] text-slate-900 dark:text-slate-100 p-6 transition-all duration-200 ${
+      role={isInteractive ? 'button' : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
+      onKeyDown={
+        isInteractive
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClick?.();
+              }
+            }
+          : undefined
+      }
+      className={`rounded-2xl border border-slate-200 dark:border-slate-800 bg-[var(--color-card-bg)] text-slate-900 dark:text-slate-100 p-6 transition-colors transition-shadow duration-200 ${
         hoverable
           ? 'hover:shadow-lg hover:border-slate-300 dark:hover:border-slate-700 hover:-translate-y-0.5 cursor-pointer'
           : 'shadow-sm'

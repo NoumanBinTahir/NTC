@@ -92,6 +92,8 @@ export const TenderFilters: React.FC<TenderFiltersProps> = ({
           <div className="flex items-center gap-1">
             <Calendar className="w-3.5 h-3.5" />
             <select
+              id="tender-sort-select"
+              aria-label={isRTL ? 'ترتیب منتخب کریں' : 'Sort tenders by'}
               value={filters.sortBy}
               onChange={(e) =>
                 onChange({ ...filters, sortBy: e.target.value as TenderFilterState['sortBy'] })

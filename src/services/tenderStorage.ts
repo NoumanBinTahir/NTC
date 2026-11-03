@@ -53,13 +53,33 @@ export async function saveTender(
   return newTender;
 }
 
+// Convert a Blob to a base64 Data URI to eliminate browser ObjectURL memory leaks
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result);
+      } else {
+        reject(new Error('Failed to convert Blob to Data URI'));
+      }
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+export function revokeTenderPdfUrl(_url: string): void {
+  // Retained as a safe no-op for backward compatibility with consumer unmount hooks
+}
+
 export async function getTenderPdfUrl(tender: Tender): Promise<string> {
-  // If uploaded by user, check IndexedDB first
+  // If uploaded by user, check IndexedDB first and return safe Data URI
   if (tender.isUploadedByUser) {
     try {
       const blob = await get<Blob>(`${PDF_BLOB_PREFIX}${tender.id}`);
       if (blob) {
-        return URL.createObjectURL(blob);
+        return await blobToDataUrl(blob);
       }
     } catch (e) {
       console.warn('Failed to retrieve PDF blob from IndexedDB', e);
@@ -70,7 +90,7 @@ export async function getTenderPdfUrl(tender: Tender): Promise<string> {
     return tender.pdfUrl;
   }
 
-  // Generate a dynamic placeholder PDF data URI as fallback
+  // Generate a dynamic placeholder PDF data URI as fallback (Data URI avoids object URL memory leaks)
   return generatePlaceholderPdfDataUri(tender);
 }
 
@@ -131,6 +151,6 @@ startxref
 694
 %%EOF`;
 
-  const blob = new Blob([content], { type: 'application/pdf' });
-  return URL.createObjectURL(blob);
+  // Return native base64 data URI to prevent unrevoked blob leaks
+  return `data:application/pdf;base64,${btoa(unescape(encodeURIComponent(content)))}`;
 }

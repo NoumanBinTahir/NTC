@@ -52,7 +52,7 @@ export const AccessibilityWidget: React.FC = () => {
           onClick={() => setIsWidgetOpen(!isWidgetOpen)}
           aria-label="Open Accessibility Menu"
           title="Accessibility & Usability Suite"
-          className="relative p-3.5 rounded-full bg-blue-700 hover:bg-blue-800 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 border-2 border-white focus:outline-none focus:ring-4 focus:ring-blue-400 group"
+          className="relative p-3.5 rounded-full bg-blue-700 hover:bg-blue-800 text-white shadow-2xl hover:scale-110 active:scale-95 transition-[transform,background-color] duration-200 border-2 border-white focus:outline-none focus:ring-4 focus:ring-blue-400 group"
         >
           <Accessibility className="w-6 h-6 animate-pulse" />
           <span className="sr-only">Accessibility Controls</span>

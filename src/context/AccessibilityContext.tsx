@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 export type TextSize = 'normal' | 'large' | 'xlarge' | 'huge';
 export type ContrastMode = 'normal' | 'high' | 'grayscale' | 'invert';
@@ -227,35 +227,39 @@ export const AccessibilityProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsSpeaking(false);
   };
 
+  const contextValue = useMemo<AccessibilityContextType>(
+    () => ({
+      ...state,
+      isWidgetOpen,
+      setIsWidgetOpen,
+      openWidget,
+      closeWidget,
+      setTextSize,
+      cycleTextSize,
+      setContrastMode,
+      cycleContrastMode,
+      cycleLineHeight,
+      cycleTextAlign,
+      cycleSaturation,
+      toggleHighlightLinks,
+      toggleReadableFont,
+      toggleTextSpacing,
+      toggleBigCursor,
+      togglePauseAnimations,
+      toggleReadingMask,
+      toggleReadingRuler,
+      toggleHideImages,
+      resetAll,
+      readAloud,
+      isSpeaking,
+      stopSpeaking,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [state, isWidgetOpen, isSpeaking]
+  );
+
   return (
-    <AccessibilityContext.Provider
-      value={{
-        ...state,
-        isWidgetOpen,
-        setIsWidgetOpen,
-        openWidget,
-        closeWidget,
-        setTextSize,
-        cycleTextSize,
-        setContrastMode,
-        cycleContrastMode,
-        cycleLineHeight,
-        cycleTextAlign,
-        cycleSaturation,
-        toggleHighlightLinks,
-        toggleReadableFont,
-        toggleTextSpacing,
-        toggleBigCursor,
-        togglePauseAnimations,
-        toggleReadingMask,
-        toggleReadingRuler,
-        toggleHideImages,
-        resetAll,
-        readAloud,
-        isSpeaking,
-        stopSpeaking,
-      }}
-    >
+    <AccessibilityContext.Provider value={contextValue}>
       {children}
       {/* Visual Reading Mask Guide Bar */}
       {state.readingMask && <ReadingMaskOverlay />}
@@ -320,7 +324,7 @@ const ReadingMaskOverlay: React.FC = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-50">
       <div
-        className="absolute left-0 right-0 h-16 bg-yellow-300/25 border-y-2 border-yellow-500 shadow-lg backdrop-blur-[0.5px] transition-all duration-75"
+        className="absolute left-0 right-0 h-16 bg-yellow-300/25 border-y-2 border-yellow-500 shadow-lg backdrop-blur-[0.5px] transition-[top] duration-75 ease-out"
         style={{ top: `${Math.max(0, mouseY - 32)}px` }}
       />
     </div>

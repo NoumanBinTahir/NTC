@@ -233,6 +233,7 @@ export const AdminTendersPage: React.FC = () => {
                     {/* Status Dropdown */}
                     <td className="px-6 py-4 whitespace-nowrap">
                       <select
+                        aria-label={`Update procurement status for tender ${tender.refNo}`}
                         value={tender.status}
                         onChange={(e) =>
                           handleStatusChange(tender.id, e.target.value as TenderStatus)

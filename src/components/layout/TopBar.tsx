@@ -37,9 +37,11 @@ export const TopBar: React.FC = () => {
 
           {/* UserWay-Style Accessibility Button */}
           <button
+            id="btn-topbar-a11y-trigger"
             onClick={openWidget}
-            className="flex items-center gap-1 bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white px-2.5 py-1 rounded-full border border-blue-500/40 transition-all text-xs font-bold"
+            className="flex items-center gap-1 bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white px-2.5 py-1 rounded-full border border-blue-500/40 transition-colors text-xs font-bold"
             title={language === 'en' ? 'Accessibility & Usability Menu' : 'رسائی و آسانی کی سہولیات'}
+            aria-label="Open Accessibility Menu"
           >
             <Accessibility className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">A11y</span>
@@ -47,9 +49,11 @@ export const TopBar: React.FC = () => {
 
           {/* Urdu / English Language Switcher */}
           <button
+            id="btn-topbar-lang-toggle"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 hover:text-white px-3 py-1 rounded-full border border-emerald-500/40 transition-all text-xs font-bold shadow-sm"
+            className="flex items-center gap-1.5 bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 hover:text-white px-3 py-1 rounded-full border border-emerald-500/40 transition-colors text-xs font-bold shadow-sm"
             title={language === 'en' ? 'Switch to Urdu (اردو)' : 'انگریزی میں تبدیل کریں'}
+            aria-label={language === 'en' ? 'Switch language to Urdu' : 'Switch language to English'}
           >
             <Globe className="w-3.5 h-3.5" />
             <span>{language === 'en' ? 'اردو' : 'English'}</span>
@@ -57,6 +61,7 @@ export const TopBar: React.FC = () => {
 
           {/* Quick Theme Switch */}
           <button
+            id="btn-topbar-theme-toggle"
             onClick={toggleDarkMode}
             className="p-1 rounded text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
             aria-label="Toggle theme"

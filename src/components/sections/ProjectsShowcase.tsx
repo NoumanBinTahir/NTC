@@ -23,7 +23,7 @@ export const ProjectsShowcase: React.FC = () => {
         {/* 3 Strategic Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {/* Pillar 1: NDC */}
-          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-emerald-500 transition-all hover:shadow-xl group flex flex-col justify-between">
+          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-emerald-500 transition-[border-color,box-shadow] duration-200 hover:shadow-xl group flex flex-col justify-between">
             <div>
               <div className="h-48 w-full overflow-hidden bg-slate-900 relative">
                 <img
@@ -65,7 +65,7 @@ export const ProjectsShowcase: React.FC = () => {
           </div>
 
           {/* Pillar 2: DRC Lahore */}
-          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-sky-500 transition-all hover:shadow-xl group flex flex-col justify-between">
+          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-sky-500 transition-[border-color,box-shadow] duration-200 hover:shadow-xl group flex flex-col justify-between">
             <div>
               <div className="h-48 w-full overflow-hidden bg-slate-900 relative">
                 <img
@@ -107,7 +107,7 @@ export const ProjectsShowcase: React.FC = () => {
           </div>
 
           {/* Pillar 3: ccTLD Pakistan */}
-          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-amber-500 transition-all hover:shadow-xl group flex flex-col justify-between">
+          <div className="rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 overflow-hidden hover:border-amber-500 transition-[border-color,box-shadow] duration-200 hover:shadow-xl group flex flex-col justify-between">
             <div>
               <div className="h-48 w-full overflow-hidden bg-slate-900 relative">
                 <img

@@ -123,7 +123,7 @@ export const ModernCarousel: React.FC = () => {
     >
       {/* Slides Container - locked in LTR for clean transform-x math */}
       <div
-        className="flex transition-transform duration-700 ease-out will-change-transform"
+        className="flex transition-transform duration-700 ease-out"
         style={{ transform: `translate3d(-${current * 100}%, 0, 0)` }}
       >
         {slides.map((slide) => (
@@ -180,7 +180,7 @@ export const ModernCarousel: React.FC = () => {
 
             {/* Right Graphic / Floating Card with Real Image (Desktop) */}
             <div className={`hidden lg:flex relative z-10 items-center justify-center flex-1 ${isRTL ? 'pr-12' : 'pl-12'}`}>
-              <div className="relative p-5 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl max-w-sm space-y-4 transform hover:scale-105 transition-all duration-300">
+              <div className="relative p-5 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl max-w-sm space-y-4 transform hover:scale-105 transition-transform duration-300">
                 <div className="w-full h-44 rounded-2xl overflow-hidden border border-white/20 shadow-inner relative group">
                   <img
                     src={slide.imageSrc}
@@ -217,7 +217,7 @@ export const ModernCarousel: React.FC = () => {
       {/* Navigation Arrows */}
       <button
         onClick={isRTL ? nextSlide : prevSlide}
-        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-900/50 hover:bg-slate-900/90 text-white backdrop-blur-md border border-white/10 transition-all hover:scale-110 active:scale-95"
+        className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-900/50 hover:bg-slate-900/90 text-white backdrop-blur-md border border-white/10 transition-transform duration-150 hover:scale-110 active:scale-95"
         aria-label="Previous slide"
       >
         <ChevronLeft className="w-5 h-5" />
@@ -225,7 +225,7 @@ export const ModernCarousel: React.FC = () => {
 
       <button
         onClick={isRTL ? prevSlide : nextSlide}
-        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-900/50 hover:bg-slate-900/90 text-white backdrop-blur-md border border-white/10 transition-all hover:scale-110 active:scale-95"
+        className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-2.5 rounded-full bg-slate-900/50 hover:bg-slate-900/90 text-white backdrop-blur-md border border-white/10 transition-transform duration-150 hover:scale-110 active:scale-95"
         aria-label="Next slide"
       >
         <ChevronRight className="w-5 h-5" />
@@ -233,11 +233,12 @@ export const ModernCarousel: React.FC = () => {
 
       {/* Modern Pill Progress Dots */}
       <div className="absolute bottom-4 sm:bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-slate-950/60 backdrop-blur-md border border-white/10">
-        {slides.map((_, i) => (
+        {slides.map((s, i) => (
           <button
-            key={i}
+            key={s.id}
+            id={`carousel-dot-${s.id}`}
             onClick={() => setCurrent(i)}
-            className={`h-2 rounded-full transition-all duration-300 ${
+            className={`h-2 rounded-full transition-[width,background-color] duration-300 ${
               current === i ? 'w-6 sm:w-8 bg-emerald-400' : 'w-2 bg-white/40 hover:bg-white/70'
             }`}
             aria-label={`Go to slide ${i + 1}`}

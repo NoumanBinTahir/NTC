@@ -5,6 +5,11 @@ const ARTICLES_KEY = 'ntc_cms_articles_v1';
 const HOME_CONFIG_KEY = 'ntc_cms_home_config_v1';
 export const CMS_CHANGE_EVENT = 'ntc_cms_updated';
 
+export const subscribeCms = (callback: () => void) => {
+  window.addEventListener(CMS_CHANGE_EVENT, callback);
+  return () => window.removeEventListener(CMS_CHANGE_EVENT, callback);
+};
+
 export const INITIAL_NEWS: NewsItem[] = [
   {
     id: 'news-1',
@@ -104,63 +109,82 @@ export const INITIAL_HOME_CONFIG: HomePageConfig = {
   },
 };
 
+let cachedNews: NewsItem[] | null = null;
+let cachedArticles: Article[] | null = null;
+let cachedConfig: HomePageConfig | null = null;
+
 export function dispatchCmsChange() {
   window.dispatchEvent(new CustomEvent(CMS_CHANGE_EVENT));
 }
 
 // News
 export function getNews(): NewsItem[] {
+  if (cachedNews) return cachedNews;
   try {
     const data = localStorage.getItem(NEWS_KEY);
     if (!data) {
       localStorage.setItem(NEWS_KEY, JSON.stringify(INITIAL_NEWS));
-      return INITIAL_NEWS;
+      cachedNews = INITIAL_NEWS;
+      return cachedNews;
     }
-    return JSON.parse(data);
+    cachedNews = JSON.parse(data);
+    return cachedNews || INITIAL_NEWS;
   } catch {
-    return INITIAL_NEWS;
+    cachedNews = INITIAL_NEWS;
+    return cachedNews;
   }
 }
 
 export function saveNews(newsList: NewsItem[]): void {
+  cachedNews = newsList;
   localStorage.setItem(NEWS_KEY, JSON.stringify(newsList));
   dispatchCmsChange();
 }
 
 // Articles
 export function getArticles(): Article[] {
+  if (cachedArticles) return cachedArticles;
   try {
     const data = localStorage.getItem(ARTICLES_KEY);
     if (!data) {
       localStorage.setItem(ARTICLES_KEY, JSON.stringify(INITIAL_ARTICLES));
-      return INITIAL_ARTICLES;
+      cachedArticles = INITIAL_ARTICLES;
+      return cachedArticles;
     }
-    return JSON.parse(data);
+    cachedArticles = JSON.parse(data);
+    return cachedArticles || INITIAL_ARTICLES;
   } catch {
-    return INITIAL_ARTICLES;
+    cachedArticles = INITIAL_ARTICLES;
+    return cachedArticles;
   }
 }
 
 export function saveArticles(articlesList: Article[]): void {
+  cachedArticles = articlesList;
   localStorage.setItem(ARTICLES_KEY, JSON.stringify(articlesList));
   dispatchCmsChange();
 }
 
 // Home Config
 export function getHomeConfig(): HomePageConfig {
+  if (cachedConfig) return cachedConfig;
   try {
     const data = localStorage.getItem(HOME_CONFIG_KEY);
     if (!data) {
       localStorage.setItem(HOME_CONFIG_KEY, JSON.stringify(INITIAL_HOME_CONFIG));
-      return INITIAL_HOME_CONFIG;
+      cachedConfig = INITIAL_HOME_CONFIG;
+      return cachedConfig;
     }
-    return JSON.parse(data);
+    cachedConfig = JSON.parse(data);
+    return cachedConfig || INITIAL_HOME_CONFIG;
   } catch {
-    return INITIAL_HOME_CONFIG;
+    cachedConfig = INITIAL_HOME_CONFIG;
+    return cachedConfig;
   }
 }
 
 export function saveHomeConfig(config: HomePageConfig): void {
+  cachedConfig = config;
   localStorage.setItem(HOME_CONFIG_KEY, JSON.stringify(config));
   dispatchCmsChange();
 }

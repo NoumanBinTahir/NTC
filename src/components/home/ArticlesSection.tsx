@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useSyncExternalStore } from 'react';
 import { ArrowRight, ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { Article } from '../../types/cms';
-import { getArticles, CMS_CHANGE_EVENT } from '../../services/cmsStorage';
+import { getArticles, subscribeCms } from '../../services/cmsStorage';
 import { Card } from '../common/Card';
 import { Badge } from '../common/Badge';
 import { ArticleReaderModal } from '../articles/ArticleReaderModal';
@@ -9,18 +9,10 @@ import { useLanguage } from '../../context/LanguageContext';
 
 export const ArticlesSection: React.FC = () => {
   const { t, isRTL } = useLanguage();
-  const [articles, setArticles] = useState<Article[]>(getArticles());
+  const articles = useSyncExternalStore(subscribeCms, getArticles);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
-
-  useEffect(() => {
-    const handleUpdate = () => {
-      setArticles(getArticles());
-    };
-    window.addEventListener(CMS_CHANGE_EVENT, handleUpdate);
-    return () => window.removeEventListener(CMS_CHANGE_EVENT, handleUpdate);
-  }, []);
 
   if (articles.length === 0) return null;
 
@@ -46,7 +38,7 @@ export const ArticlesSection: React.FC = () => {
             <Card
               key={art.id}
               onClick={() => setSelectedArticle(art)}
-              className="group cursor-pointer overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-emerald-500 transition-all p-0"
+              className="group cursor-pointer overflow-hidden flex flex-col justify-between hover:shadow-xl hover:border-emerald-500 transition-shadow duration-200 p-0"
             >
               <div>
                 <div className="h-48 w-full overflow-hidden bg-slate-900 relative">

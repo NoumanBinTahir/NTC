@@ -28,13 +28,13 @@ export const Footer: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link
               to="/contact"
-              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-slate-900 hover:bg-slate-100 transition-all shadow-md"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-slate-900 hover:bg-slate-100 transition-colors duration-150 shadow-md"
             >
               {t('nav.contact')}
             </Link>
             <Link
               to="/tenders"
-              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-500 transition-all shadow-md"
+              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-500 transition-colors duration-150 shadow-md"
             >
               {t('hero.ctaPrimary')}
             </Link>

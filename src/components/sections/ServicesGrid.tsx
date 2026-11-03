@@ -151,8 +151,8 @@ export const ServicesGrid: React.FC = () => {
                 </div>
 
                 <ul className="space-y-1.5 pt-3 border-t border-slate-100 dark:border-slate-800/80">
-                  {service.features.map((feat, idx) => (
-                    <li key={idx} className="text-[11px] font-medium text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                  {service.features.map((feat) => (
+                    <li key={`${service.id}-${feat.slice(0, 24)}`} className="text-[11px] font-medium text-slate-500 dark:text-slate-400 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
                       <span>{feat}</span>
                     </li>

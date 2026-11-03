@@ -1,22 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, ArrowLeft } from 'lucide-react';
-import { getHomeConfig, CMS_CHANGE_EVENT } from '../../services/cmsStorage';
+import { getHomeConfig, subscribeCms } from '../../services/cmsStorage';
 import { useLanguage } from '../../context/LanguageContext';
 
 export const HeroSpotlight: React.FC = () => {
   const { isRTL } = useLanguage();
-  const [config, setConfig] = useState(getHomeConfig());
+  const config = useSyncExternalStore(subscribeCms, getHomeConfig);
 
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
-
-  useEffect(() => {
-    const handleUpdate = () => {
-      setConfig(getHomeConfig());
-    };
-    window.addEventListener(CMS_CHANGE_EVENT, handleUpdate);
-    return () => window.removeEventListener(CMS_CHANGE_EVENT, handleUpdate);
-  }, []);
 
   if (!config.heroSpotlight.enabled) return null;
 

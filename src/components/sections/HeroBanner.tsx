@@ -70,13 +70,13 @@ export const HeroBanner: React.FC = () => {
         {/* Live Metrics Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto pt-6">
           {[
-            { label: t('hero.stat1Desc'), val: t('hero.stat1'), icon: <Activity className="w-4 h-4 text-emerald-500" /> },
-            { label: t('hero.stat2Desc'), val: t('hero.stat2'), icon: <ShieldCheck className="w-4 h-4 text-sky-500" /> },
-            { label: t('hero.stat3Desc'), val: t('hero.stat3'), icon: <Server className="w-4 h-4 text-amber-500" /> },
-            { label: 'Uptime SLA / 24x7', val: '99.99%', icon: <Award className="w-4 h-4 text-purple-500" /> },
-          ].map((metric, i) => (
+            { id: 'stat-fiber-reach', label: t('hero.stat1Desc'), val: t('hero.stat1'), icon: <Activity className="w-4 h-4 text-emerald-500" /> },
+            { id: 'stat-security-tier', label: t('hero.stat2Desc'), val: t('hero.stat2'), icon: <ShieldCheck className="w-4 h-4 text-sky-500" /> },
+            { id: 'stat-exchanges', label: t('hero.stat3Desc'), val: t('hero.stat3'), icon: <Server className="w-4 h-4 text-amber-500" /> },
+            { id: 'stat-sla-uptime', label: 'Uptime SLA / 24x7', val: '99.99%', icon: <Award className="w-4 h-4 text-purple-500" /> },
+          ].map((metric) => (
             <div
-              key={i}
+              key={metric.id}
               className="p-3 sm:p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm text-center space-y-1 hover:border-emerald-400 dark:hover:border-emerald-600 transition-colors"
             >
               <div className="flex items-center justify-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">

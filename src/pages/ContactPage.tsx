@@ -93,6 +93,7 @@ export const ContactPage: React.FC = () => {
 
               {[
                 {
+                  id: 'dir-north-isb',
                   region: isRTL ? 'اسلام آباد ریجنل ہیڈ کوارٹر (نارتھ زون)' : 'Islamabad Regional HQs (North)',
                   director: isRTL ? 'جناب محمد سرور (ڈائریکٹر این ٹی سی اسلام آباد)' : 'Mr. Muhammad Sarwar (Director NTC Islamabad)',
                   address: isRTL ? 'این ٹی سی ریجنل ہیڈ کوارٹر بلڈنگ، اتاترک ایونیو، ایف 5/1، اسلام آباد' : 'NTC Regional HQs Building, Ataturk Avenue, F-5/1, Islamabad',
@@ -100,6 +101,7 @@ export const ContactPage: React.FC = () => {
                   email: 'muhammad.sarwar@ntc.org.pk',
                 },
                 {
+                  id: 'dir-central-lhe',
                   region: isRTL ? 'لاہور ڈائریکٹوریٹ (سینٹرل زون)' : 'Lahore Directorate (Central)',
                   director: isRTL ? 'جناب امجد اکرام خان (ڈائریکٹر این ٹی سی لاہور)' : 'Mr. Amjad Ikram Khan (Director NTC Lahore)',
                   address: isRTL ? '6 ریس کورس روڈ، شاہراہ ایوانِ صنعت و تجارت، لاہور' : '6-Race Course Road, Shahrah Aiwan-e-Sanat-o-Tijarat, Lahore',
@@ -107,6 +109,7 @@ export const ContactPage: React.FC = () => {
                   email: 'amjad.ikram@ntc.org.pk',
                 },
                 {
+                  id: 'dir-south-khi',
                   region: isRTL ? 'کراچی ڈائریکٹوریٹ (ساؤتھ زون)' : 'Karachi Directorate (South)',
                   director: isRTL ? 'جناب محمد عرفان (ڈائریکٹر این ٹی سی کراچی)' : 'Mr. Muhammad Irfan (Director NTC Karachi)',
                   address: isRTL ? 'کے اے پی 1، اولڈ ایکسچینج بلڈنگ، نزد ملیر ہالٹ، کراچی' : 'KAP-I, Old Exchange Building, Near Malir Halt, Karachi',
@@ -114,6 +117,7 @@ export const ContactPage: React.FC = () => {
                   email: 'muhammad.irfan@ntc.org.pk',
                 },
                 {
+                  id: 'dir-kp-pew',
                   region: isRTL ? 'پشاور ڈائریکٹوریٹ (خیبر پختونخوا)' : 'Peshawar Directorate (KP)',
                   director: isRTL ? 'جناب نور حاکم (ڈائریکٹر این ٹی سی پشاور)' : 'Mr. Noor Hakim (Director NTC Peshawar)',
                   address: isRTL ? '1 دی مال، شیر شاہ سوری روڈ، پشاور کینٹ، پشاور' : '1 The Mall, Sher Shah Suri Road, Peshawar Cantt, Peshawar',
@@ -121,14 +125,15 @@ export const ContactPage: React.FC = () => {
                   email: 'noor.hakim@ntc.org.pk',
                 },
                 {
+                  id: 'dir-balochistan-qta',
                   region: isRTL ? 'کوئٹہ ڈائریکٹوریٹ (بلوچستان)' : 'Quetta Directorate (Balochistan)',
                   director: isRTL ? 'محترمہ حمیرہ خاقان چوہدری (ڈائریکٹر این ٹی سی کوئٹہ)' : 'Mrs. Humeira Khaqan Chaudhary (Director NTC Quetta)',
                   address: isRTL ? 'میر جعفر خان جمالی روڈ، کوئٹہ' : 'Mir Jaffar Khan Jamali Road, Quetta',
                   phone: '+92 81 9202151 / +92 300 8501364',
                   email: 'humeira.chaudhary@ntc.org.pk',
                 },
-              ].map((loc, i) => (
-                <Card key={i} className="space-y-2 p-4">
+              ].map((loc) => (
+                <Card key={loc.id} className="space-y-2 p-4">
                   <div className="flex items-center justify-between">
                     <h4 className="font-bold text-xs uppercase tracking-wider text-[var(--color-primary)]">
                       {loc.region}
@@ -185,6 +190,7 @@ export const ContactPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
+                    id="contact-fullname"
                     label={t('contact.fullName')}
                     placeholder={isRTL ? 'مثلاً طارق محمود' : 'e.g. Tariq Mehmood'}
                     value={formData.name}
@@ -193,6 +199,7 @@ export const ContactPage: React.FC = () => {
                   />
 
                   <Input
+                    id="contact-department"
                     label={t('contact.department')}
                     placeholder={isRTL ? 'مثلاً وزارتِ خارجہ، حکومتِ پاکستان' : 'e.g. Ministry of Foreign Affairs'}
                     value={formData.department}
@@ -203,6 +210,7 @@ export const ContactPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input
+                    id="contact-email"
                     type="email"
                     label={t('contact.officialEmail')}
                     placeholder="officer@domain.gov.pk"
@@ -212,6 +220,7 @@ export const ContactPage: React.FC = () => {
                   />
 
                   <Input
+                    id="contact-phone"
                     label={t('contact.phone')}
                     placeholder="051-9200000 / 0300-0000000"
                     value={formData.phone}
@@ -221,6 +230,7 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 <Input
+                  id="contact-subject"
                   label={t('contact.subject')}
                   placeholder={isRTL ? 'مثلاً ڈارک فائبر یا ڈیٹا سینٹر ریک ہوسٹنگ کی درخواست' : 'e.g. Request for 10Gbps Dedicated Dark Fiber & Data Center Rack'}
                   value={formData.subject}
@@ -229,10 +239,14 @@ export const ContactPage: React.FC = () => {
                 />
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                  <label
+                    htmlFor="contact-message"
+                    className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300"
+                  >
                     {t('contact.message')}
                   </label>
                   <textarea
+                    id="contact-message"
                     rows={4}
                     placeholder={isRTL ? 'اپنے مطلوبہ مواصلاتی، بینڈوتھ یا ہوسٹنگ تقاضوں کی تفصیل درج کریں...' : 'Describe your telecom, bandwidth, or hosting requirements...'}
                     value={formData.message}

@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useSyncExternalStore } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Volume2 } from 'lucide-react';
-import { getHomeConfig, getNews, CMS_CHANGE_EVENT } from '../../services/cmsStorage';
+import { getHomeConfig, getNews, subscribeCms } from '../../services/cmsStorage';
 
 export const AnnouncementTicker: React.FC = () => {
-  const [config, setConfig] = useState(getHomeConfig());
-  const [news, setNews] = useState(getNews());
-
-  useEffect(() => {
-    const handleUpdate = () => {
-      setConfig(getHomeConfig());
-      setNews(getNews());
-    };
-    window.addEventListener(CMS_CHANGE_EVENT, handleUpdate);
-    return () => window.removeEventListener(CMS_CHANGE_EVENT, handleUpdate);
-  }, []);
+  const config = useSyncExternalStore(subscribeCms, getHomeConfig);
+  const news = useSyncExternalStore(subscribeCms, getNews);
 
   if (!config.announcementTicker.enabled) return null;
 
